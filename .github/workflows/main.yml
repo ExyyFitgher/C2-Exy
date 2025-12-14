@@ -28,8 +28,11 @@ jobs:
       - name: Rebuild native modules for Electron
         run: npx electron-rebuild -f -w better-sqlite3
 
-      - name: Build application
-        run: npm run build
+      - name: Build Frontend
+        run: npx vite build
+
+      - name: Build Backend
+        run: npx esbuild server/index.ts --platform=node --bundle --format=cjs --outfile=dist/index.cjs --external:better-sqlite3 --minify
 
       - name: Build Windows EXE
         run: npx electron-builder --win --publish never
